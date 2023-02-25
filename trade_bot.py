@@ -1,7 +1,8 @@
 from alpaca.trading.client import TradingClient
+from keys import *
 
-API_KEY = "AKLSS5NP23IPAU2P5NCH"
-SECRET_KEY = "GNbNHsXMvBlb355WuzeeQ9PbZVC3u475iiJJfxBV"
+API_KEY = ak
+SECRET_KEY = sk
 
 trading_client = TradingClient(API_KEY, SECRET_KEY, paper=False)
 
