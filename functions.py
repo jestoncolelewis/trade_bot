@@ -15,10 +15,9 @@ def get_history(ak, sk, symbols):
         latest_ask_price = latest_multisymbol_quotes[symbol].ask_price
         latest_ask_price = '{}'.format(latest_ask_price)
         latest_prices[symbol] = latest_ask_price
-    
     return latest_prices
 
-def buy_market(ak, sk, symbols, prices):
+def buy_market(ak, sk, symbols, total):
     trading_client = TradingClient(ak, sk, paper=True)
 
     account = trading_client.get_account()
@@ -30,12 +29,14 @@ def buy_market(ak, sk, symbols, prices):
     print('${} is available as buying power.'.format(account.buying_power)) # type:ignore
 
     # divide buying power by number of symbols to produce purchase price
+    buying_power = float(account.buying_power) # type: ignore
+    price = buying_power/total
     
     for sym in symbols:
         trading_client = TradingClient(ak, sk, paper=True)
         market_order_data = MarketOrderRequest(
                         symbol=sym,
-                        notional=prices[sym],
+                        notional=price,
                         side=OrderSide.BUY,
                         time_in_force=TimeInForce.DAY
                         )
