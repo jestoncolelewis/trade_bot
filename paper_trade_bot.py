@@ -10,6 +10,7 @@ SECRET_KEY = paper_sk
 # Symbols
 data = pandas.read_csv('./constituents.csv')
 symbols = data['Symbol'].tolist()
+total = len(symbols)
 
 prices = func.get_history(API_KEY, SECRET_KEY, symbols)
-func.buy_market(API_KEY, SECRET_KEY, symbols, prices)
+func.buy_market(API_KEY, SECRET_KEY, symbols, total)
