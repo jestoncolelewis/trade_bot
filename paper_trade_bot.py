@@ -4,8 +4,8 @@ import functions as func
 from keys import *
 
 # Key handling
-API_KEY = paper_ak
-SECRET_KEY = paper_sk
+API_KEY = al_paper_ak
+SECRET_KEY = al_paper_sk
 
 # Symbols
 data = pandas.read_csv('./constituents.csv')
