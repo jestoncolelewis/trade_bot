@@ -1,20 +1,50 @@
 import requests
 import json
+import pandas as pd
+from keys import *
 
-url = 'https://tradestie.com/api/v1/apps/reddit'
+""" data needed:
+        stock symbol
+            what symbols to follow?
+                reddit & twitter?
+                top 50 companies?
+        history - daily? weekly? monthly? yearly?
+            open/close
+            profit/loss in comparison with price
+        opnions - reddit/twitter/other
+            quantifying sentiment score from a variety of sources
+"""
 
-response = requests.get(url)
+# reddit
+r_url = 'https://tradestie.com/api/v1/apps/reddit'
+
+response = requests.get(r_url)
 posts = json.loads(response.text)
 
-to_buy = []
-to_sell = []
+r_to_buy = []
+r_to_sell = []
 
 for post in posts:
-    if post['sentiment'] == 'Bullish':
-        to_buy.append({
+    if post['sentiment'] == 'Bullish' and post['sentiment_score'] >= 0.001:
+        r_to_buy.append({
             'symbol': '{}'.format(post['ticker']),
+            'sentiment_score': '{}'.format(post['sentiment_score'])
             })
-    if post['sentiment'] == 'Bearish':
-        to_sell.append({
+    if post['sentiment'] == 'Bearish' and post['sentiment_score'] <= 0.000:
+        r_to_sell.append({
             'symbol': '{}'.format(post['ticker']),
+            'sentiment_score': '{}'.format(post['sentiment_score'])
         })
+
+# alpha vantage
+func = 'TIME_SERIES_INTRADAY'
+symbol = 'AAPL'
+inv = '5min'
+
+a_url = 'https://www.alphavantage.co/query?function={}&symbol={}&interval={}&apikey={}'.format(func, symbol, inv, av_k)
+
+av_response = requests.get(a_url)
+av_data = av_response.text
+av_data = json.loads(av_data)
+
+# twitter
