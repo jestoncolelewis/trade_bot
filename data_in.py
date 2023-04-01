@@ -7,7 +7,7 @@ from keys import *
             what symbols to follow?
                 reddit & twitter?
                 top 50 companies?
-        history - daily? weekly? monthly? yearly?
+        history - daily
             open/close
             profit/loss in comparison with price
         opnions - reddit/twitter/other
@@ -21,25 +21,22 @@ def reddit():
     response = requests.get(r_url)
     posts = json.loads(response.text)
 
-    r_to_buy = []
-    r_to_sell = []
+    r_data = []
 
     for post in posts:
-        if post['sentiment'] == 'Bullish' and post['sentiment_score'] >= 0.001:
-            r_to_buy.append({
-                'symbol': '{}'.format(post['ticker']),
-                'sentiment_score': '{}'.format(post['sentiment_score'])
-                })
-        if post['sentiment'] == 'Bearish' and post['sentiment_score'] <= 0.000:
-            r_to_sell.append({
-                'symbol': '{}'.format(post['ticker']),
-                'sentiment_score': '{}'.format(post['sentiment_score'])
+        r_data.append({
+            'symbol': '{}'.format(post['ticker']),
+            'sentiment': '{}'.format(post['sentiment_score'])
             })
 
-    return r_to_buy, r_to_sell
+    return r_data
 
-# alpha vantage
-def alpha():
+# twitter
+def twitter():
+    return
+
+# alpha vantage - replace with alpaca?
+def alpha(data):
     func = 'TIME_SERIES_INTRADAY'
     symbol = 'AAPL'
     inv = '5min'
@@ -51,5 +48,3 @@ def alpha():
     av_data = json.loads(av_data)
 
     return av_data
-
-# twitter
