@@ -1,6 +1,10 @@
 import requests
 import json
 from keys import *
+from alpaca.data.historical import StockHistoricalDataClient # type: ignore
+from alpaca.data.requests import StockTradesRequest
+from alpaca.data.timeframe import TimeFrame
+from datetime import datetime
 
 """ data needed:
         stock symbol
@@ -35,16 +39,17 @@ def reddit():
 def twitter():
     return
 
-# alpha vantage - replace with alpaca?
-def alpha(data):
-    func = 'TIME_SERIES_INTRADAY'
-    symbol = 'AAPL'
-    inv = '5min'
+# alpaca
+def history(data):
+    stock_client = StockHistoricalDataClient(al_paper_ak,  al_paper_sk)
+    for d in data:
+        request_params = StockTradesRequest(
+            symbol_or_symbols=d['symbol'],
+            start=datetime(2022,12,29),
+            end=datetime(2022,12,31),
+            limit=1
+            ) # type: ignore
+        
+        data.append(stock_client.get_stock_trades(request_params))
 
-    a_url = 'https://www.alphavantage.co/query?function={}&symbol={}&interval={}&apikey={}'.format(func, symbol, inv, av_k)
-
-    av_response = requests.get(a_url)
-    av_data = av_response.text
-    av_data = json.loads(av_data)
-
-    return av_data
+    return data
