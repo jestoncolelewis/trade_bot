@@ -1,4 +1,4 @@
-from data_in import *
+from data_in import reddit, twitter, history
 
 def combine(src1, src2):
     data = []
@@ -16,4 +16,4 @@ t_data = twitter()
 
 data = combine(r_data, t_data)
 
-history = alpha(data)
+historic = history(data)
