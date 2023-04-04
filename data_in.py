@@ -37,19 +37,26 @@ def reddit():
 
 # twitter
 def twitter():
-    return
+    t_data = []
+    return t_data
 
 # alpaca
 def history(data):
     stock_client = StockHistoricalDataClient(al_paper_ak,  al_paper_sk)
+    history = []
     for d in data:
-        request_params = StockTradesRequest(
-            symbol_or_symbols=d['symbol'],
-            start=datetime(2022,12,29),
-            end=datetime(2022,12,31),
-            limit=1
-            ) # type: ignore
-        
-        data.append(stock_client.get_stock_trades(request_params))
+        try:
+            request_params = StockTradesRequest(
+                symbol_or_symbols=d,
+                start=datetime(2022,12,29),
+                end=datetime(2022,12,31),
+                limit=1
+                ) # type: ignore
+            
+            history.append(stock_client.get_stock_trades(request_params))
+        except AttributeError as err:
+            print(err)
+        except KeyError as err:
+            print(err)
 
-    return data
+    return history
