@@ -5,9 +5,10 @@ def combine(src1, src2):
     for i in src1:
         for j in src2:
             if i['symbol'] != j['symbol']:
-                data.append(i)
+                data.append(i['symbol'])
             else:
-                data.append(j)
+                data.append(j['symbol'])
+        data.append(i['symbol'])
     return data
 
 r_data = reddit()
