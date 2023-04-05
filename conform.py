@@ -1,20 +1,16 @@
-from data_in import reddit, twitter, history
+from data_in import reddit, news, history
 
 def combine(src1, src2):
     data = []
     for i in src1:
-        for j in src2:
-            if i['symbol'] != j['symbol']:
-                data.append(i['symbol'])
-            else:
-                data.append(j['symbol'])
-        data.append(i['symbol'])
+        if i not in src2:
+            data.append(i['symbol'])
     return data
 
 r_data = reddit()
 
-t_data = twitter()
+a_data = news()
 
-data = combine(r_data, t_data)
+data = combine(r_data, a_data)
 
-historic = history(data)
+prices = history(data)

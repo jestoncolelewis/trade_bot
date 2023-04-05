@@ -9,12 +9,12 @@ from datetime import datetime
 """ data needed:
         stock symbol
             what symbols to follow?
-                reddit & twitter?
-                top 50 companies?
+                reddit
+                top 50 companies
         history - daily
             open/close
             profit/loss in comparison with price
-        opnions - reddit/twitter/other
+        opnions - reddit/other
             quantifying sentiment score from a variety of sources
 """
 
@@ -35,12 +35,11 @@ def reddit():
 
     return r_data
 
-# twitter
-def twitter():
-    t_data = []
-    return t_data
-
 # alpaca
+def news():
+    data = []
+    return data
+
 def history(data):
     stock_client = StockHistoricalDataClient(al_paper_ak,  al_paper_sk)
     history = []
