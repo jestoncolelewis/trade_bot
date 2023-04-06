@@ -5,17 +5,23 @@ from alpaca.data.historical import StockHistoricalDataClient # type: ignore
 from alpaca.data.requests import StockTradesRequest
 from alpaca.data.timeframe import TimeFrame
 from datetime import datetime
+import numpy as np
 
-""" data needed:
-        stock symbol
-            what symbols to follow?
-                reddit
-                top 50 companies
-        history - daily
-            open/close
-            profit/loss in comparison with price
-        opnions - reddit/other
-            quantifying sentiment score from a variety of sources
+""" 
+data needed:
+    format
+        - nd array
+            - symbol    price   date  sentiment
+    stock symbol
+        - what symbols to follow?
+            - reddit
+            - top 50 companies
+    history - daily
+        - open/close
+        - profit/loss in comparison with price
+    opnions - reddit/alpaca/other
+        - quantifying sentiment score from a variety of sources
+        - use sentiment analysis for opinions outside of reddit
 """
 
 # reddit
@@ -35,11 +41,12 @@ def reddit():
 
     return r_data
 
-# alpaca
+# alpaca news
 def news():
     data = []
     return data
 
+# alpaca history
 def history(data):
     stock_client = StockHistoricalDataClient(al_paper_ak,  al_paper_sk)
     history = []
